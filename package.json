@@ -1,0 +1,8 @@
+{
+  "name": "voll-demo-entrega",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo Voll 360 de entrega assistida com acionamentos WhatsApp e Voice",
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=18"}
+}
