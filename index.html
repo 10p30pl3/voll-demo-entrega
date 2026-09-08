@@ -63,7 +63,9 @@
 
 <script>
 let ticket=false, confirmed=false, wa=0, voice=0, tries=0;
-let customerPhone='5511989785888';
+const DEFAULT_CUSTOMER_PHONE='5511989785888';
+const savedCustomerPhone=localStorage.getItem('vollDemoCustomerPhone');
+let customerPhone=/^55\d{11}$/.test(savedCustomerPhone||'') ? savedCustomerPhone : DEFAULT_CUSTOMER_PHONE;
 const $=id=>document.getElementById(id);
 function now(){return new Date().toLocaleTimeString('pt-BR')}
 function localDigits(){return customerPhone.replace(/^55/,'')}
@@ -73,7 +75,7 @@ function applyPhoneMask(input){input.value=maskPhoneDigits(input.value)}
 function syncPhoneUI(){$('contactDisplay').textContent=formatDisplayPhone();$('technicalPhone').textContent=customerPhone}
 function editPhone(){$('phoneInput').value=maskPhoneDigits(localDigits());$('phoneEdit').classList.add('open');$('phoneInput').focus()}
 function cancelPhone(){$('phoneEdit').classList.remove('open');$('phoneInput').value=maskPhoneDigits(localDigits())}
-function savePhone(){const digits=$('phoneInput').value.replace(/\D/g,'');if(digits.length!==11){alert('Informe um telefone com DDD e 9 dígitos, por exemplo: (11) 98978-5888.');return}customerPhone='55'+digits;$('phoneEdit').classList.remove('open');syncPhoneUI();log('system','Telefone do cliente atualizado para '+formatDisplayPhone()+'.')}
+function savePhone(){const digits=$('phoneInput').value.replace(/\D/g,'');if(digits.length!==11){alert('Informe um telefone com DDD e 9 dígitos, por exemplo: (11) 98978-5888.');return}customerPhone='55'+digits;localStorage.setItem('vollDemoCustomerPhone',customerPhone);$('phoneEdit').classList.remove('open');syncPhoneUI();log('system','Telefone do cliente atualizado para '+formatDisplayPhone()+'.')}
 function toggleLogs(){$('logsPanel').classList.toggle('open')}
 function log(kind,text){const e=document.createElement('div');e.className='event '+(kind==='wa'?'wae':kind==='voice'?'ve':'');e.innerHTML='<div class="time">'+now()+'</div>'+text;$('journey').prepend(e)}
 function sync(){$('waCount').textContent=wa;$('voiceCount').textContent=voice;$('tryCount').textContent=tries;syncPhoneUI()}
