@@ -6,7 +6,8 @@ const path = require('path');
 const PORT = Number(process.env.PORT || 3001);
 const VOLL_API_KEY = process.env.VOLL_API_KEY;
 const VOLL_COOKIE = process.env.VOLL_COOKIE || '';
-const TRIGGER_ID = '9c3b27b6-1c6b-4d5d-a012-42bc20654e03';
+const TRIGGER_HOST = 'produtos.vollsc.com';
+const TRIGGER_ID = 'a62dbdfa-baed-46f9-94f0-790bae885e1a';
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -34,7 +35,7 @@ function proxyTrigger(req, res) {
     });
 
     const options = {
-      hostname: 'suporte.vollsc.com',
+      hostname: TRIGGER_HOST,
       port: 443,
       path: `/api/triggers/activate/${TRIGGER_ID}?voll-api-key=${encodeURIComponent(VOLL_API_KEY)}`,
       method: 'POST',
